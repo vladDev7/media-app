@@ -14,8 +14,10 @@ datasource db {
   provider = "postgresql"
 }
 
-model user {
+model User {
   id Int @default(autoincrement()) @id
   login String @unique
   password String
+
+  @@map("users")
 }
