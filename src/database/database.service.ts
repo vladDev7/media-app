@@ -10,7 +10,6 @@ export class DatabaseService extends PrismaClient {
         @Inject(databaseConfig.KEY)
         private readonly config: ConfigType<typeof databaseConfig>
     ) {
-        // ConfigModule.
         const adapter = new PrismaPg({ connectionString: config.url })
         super({ adapter });
     }
