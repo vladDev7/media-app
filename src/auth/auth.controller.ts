@@ -15,6 +15,7 @@ import {
   UserLoginSchema,
   UserLoginDto,
 } from 'contracts';
+import type { Request as ExpressRequest } from 'express';
 
 @Controller('auth')
 export class AuthController {
@@ -35,7 +36,7 @@ export class AuthController {
 
   @UseGuards(LocalAuthGuard)
   @Post('/logout')
-  logout(@Request() req) {
+  logout(@Request() req: ExpressRequest) {
     return req.logout();
   }
 }
