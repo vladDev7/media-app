@@ -5,15 +5,18 @@ import { DatabaseModule } from 'src/database/database.module';
 
 @Module({
   imports: [DatabaseModule],
-  providers: [{
-    useClass: UsersService,
-    provide: 'USER_SERVICE',
-  }],
+  providers: [
+    {
+      useClass: UsersService,
+      provide: 'USER_SERVICE',
+    },
+  ],
   controllers: [UsersController],
-  exports: [{
-    useClass: UsersService,
-    provide: 'USER_SERVICE',
-    }
-  ]
+  exports: [
+    {
+      useClass: UsersService,
+      provide: 'USER_SERVICE',
+    },
+  ],
 })
 export class UsersModule {}
