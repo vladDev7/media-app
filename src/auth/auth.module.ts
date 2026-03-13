@@ -11,7 +11,7 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 
 @Module({
   imports: [
-    UsersModule, 
+    UsersModule,
     PassportModule,
     JwtModule.registerAsync({
       inject: [appConfig.KEY],
@@ -19,11 +19,11 @@ import { JwtStrategy } from './strategies/jwt.strategy';
         secret: config.jwt_access_token_secret,
         signOptions: {
           expiresIn: config.jwt_access_token_expiration_ms,
-        }
-      })
+        },
+      }),
     }),
   ],
   providers: [AuthService, LocalStrategy, JwtStrategy],
-  controllers: [AuthController]
+  controllers: [AuthController],
 })
 export class AuthModule {}

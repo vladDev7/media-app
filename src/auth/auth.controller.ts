@@ -1,27 +1,41 @@
-import { Body, Controller, Post, UseGuards, Request } from '@nestjs/common';
-import { Prisma } from 'generated/prisma/client';
+import {
+  Body,
+  Controller,
+  Post,
+  UseGuards,
+  Request,
+  UsePipes,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { AuthGuard } from '@nestjs/passport';
 import { LocalAuthGuard } from './guards/local.auth-guard';
+import { SchemaValidationPipe } from 'src/helpers/pipes/schema.validation-pipe';
+import {
+  UserCreateSchema,
+  UserCreateDto,
+  UserLoginSchema,
+  UserLoginDto,
+} from 'contracts';
 
 @Controller('auth')
 export class AuthController {
-    constructor(private authService: AuthService) {}
-    
-    @Post('/')
-    async register(@Body() data: Prisma.UserCreateInput) {
-        return this.authService.register(data);
-    }
+  constructor(private authService: AuthService) {}
 
-    @UseGuards(LocalAuthGuard)
-    @Post('/login')
-    async login(@Request() req) {
-        return this.authService.login(req.user);
-    }
+  @Post('/')
+  @UsePipes(new SchemaValidationPipe(UserCreateSchema))
+  async register(@Body() data: UserCreateDto) {
+    return this.authService.register(data);
+  }
 
-    @UseGuards(LocalAuthGuard)
-    @Post('/logout')
-    async logout(@Request() req) {
-        return req.logout();
-    }
+  @UseGuards(LocalAuthGuard)
+  @Post('/login')
+  @UsePipes(new SchemaValidationPipe(UserLoginSchema))
+  async login(@Request() req: UserLoginDto) {
+    return this.authService.login(req.user);
+  }
+
+  @UseGuards(LocalAuthGuard)
+  @Post('/logout')
+  async logout(@Request() req) {
+    return await req.logout();
+  }
 }

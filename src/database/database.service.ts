@@ -6,11 +6,11 @@ import databaseConfig from 'src/config/database.config';
 
 @Injectable()
 export class DatabaseService extends PrismaClient {
-    constructor(
-        @Inject(databaseConfig.KEY)
-        private readonly config: ConfigType<typeof databaseConfig>
-    ) {
-        const adapter = new PrismaPg({ connectionString: config.url })
-        super({ adapter });
-    }
+  constructor(
+    @Inject(databaseConfig.KEY)
+    private readonly config: ConfigType<typeof databaseConfig>,
+  ) {
+    const adapter = new PrismaPg({ connectionString: config.url });
+    super({ adapter });
+  }
 }
