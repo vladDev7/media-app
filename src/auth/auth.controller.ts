@@ -29,13 +29,13 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Post('/login')
   @UsePipes(new SchemaValidationPipe(UserLoginSchema))
-  async login(@Request() req: UserLoginDto) {
+  login(@Request() req: UserLoginDto) {
     return this.authService.login(req.user);
   }
 
   @UseGuards(LocalAuthGuard)
   @Post('/logout')
-  async logout(@Request() req) {
-    return await req.logout();
+  logout(@Request() req) {
+    return req.logout();
   }
 }
