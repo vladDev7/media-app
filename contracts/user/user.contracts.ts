@@ -17,13 +17,15 @@ export const UserCreateSchema = UserSchema.pick({
   surname: true,
 });
 
+export const UserInnerSchema = UserSchema.omit({
+  password: true,
+});
+
 export const UserLoginSchema = zod.object({
-  user: UserSchema.pick({
-    email: true,
-    password: true,
-  }),
+  user: UserInnerSchema,
 });
 
 export type UserDto = zod.infer<typeof UserSchema>;
 export type UserCreateDto = zod.infer<typeof UserCreateSchema>;
+export type UserInnerDto = zod.infer<typeof UserInnerSchema>;
 export type UserLoginDto = zod.infer<typeof UserLoginSchema>;
