@@ -1,9 +1,8 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { UserCreateInput } from 'generated/prisma/models';
 import { UsersService } from 'src/users/users.service';
 import { compare } from 'bcryptjs';
-import { User } from 'generated/prisma/client';
 import { JwtService } from '@nestjs/jwt';
+import { UserCreateDto, UserInnerDto } from 'contracts';
 
 @Injectable()
 export class AuthService {
@@ -13,15 +12,15 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async register(data: UserCreateInput) {
+  async register(data: UserCreateDto) {
     return this.userService.create(data);
   }
 
   async validateUser(
-    login: string,
+    email: string,
     password: string,
-  ): Promise<Omit<User, 'password'> | null> {
-    const user = await this.userService.findOne({ login });
+  ): Promise<UserInnerDto | null> {
+    const user = await this.userService.findOne({ email });
 
     if (!user) {
       throw new Error('User was not found');
@@ -38,8 +37,8 @@ export class AuthService {
     return null;
   }
 
-  async login(user: any) {
-    const payload = { username: user.login, sub: user.id };
+  login(user: UserInnerDto) {
+    const payload = { username: user.email, sub: user.id };
 
     return {
       access_token: this.jwtService.sign(payload),

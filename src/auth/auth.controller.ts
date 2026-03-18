@@ -15,6 +15,7 @@ import {
   UserLoginSchema,
   UserLoginDto,
 } from 'contracts';
+import type { Request as ExpressRequest } from 'express';
 
 @Controller('auth')
 export class AuthController {
@@ -29,13 +30,13 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Post('/login')
   @UsePipes(new SchemaValidationPipe(UserLoginSchema))
-  async login(@Request() req: UserLoginDto) {
+  login(@Request() req: UserLoginDto) {
     return this.authService.login(req.user);
   }
 
   @UseGuards(LocalAuthGuard)
   @Post('/logout')
-  async logout(@Request() req) {
-    return await req.logout();
+  logout(@Request() req: ExpressRequest) {
+    return req.logout();
   }
 }
