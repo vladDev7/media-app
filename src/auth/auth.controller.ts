@@ -1,20 +1,8 @@
-import {
-  Body,
-  Controller,
-  Post,
-  UseGuards,
-  Request,
-  UsePipes,
-} from '@nestjs/common';
+import { Body, Controller, Post, UseGuards, Request, UsePipes } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './guards/local.auth-guard';
 import { SchemaValidationPipe } from 'src/helpers/pipes/schema.validation-pipe';
-import {
-  UserCreateSchema,
-  UserCreateDto,
-  UserLoginSchema,
-  UserLoginDto,
-} from 'contracts';
+import { UserCreateSchema, UserCreateDto, UserLoginSchema, UserLoginDto } from 'contracts';
 import type { Request as ExpressRequest } from 'express';
 
 @Controller('auth')
