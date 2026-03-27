@@ -34,6 +34,7 @@ import appConfig from './config/app.config';
     DatabaseModule,
     UsersModule,
     AuthModule,
+    MediaMetadata,
   ],
   controllers: [AppController],
   providers: [AppService, DatabaseService],
