@@ -7,5 +7,6 @@
   "arrowParens": "always",
   "trailingComma": "all",
   "quoteProps": "as-needed",
-  "printWidth": 120
+  "printWidth": 120,
+  "endOfLine": "auto"
 }
