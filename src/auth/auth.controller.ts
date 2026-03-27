@@ -25,6 +25,9 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Post('/logout')
   logout(@Request() req: ExpressRequest) {
-    return req.logout();
+    // TODO: change logout strategy
+    return req.logout((err) => {
+      console.log(err);
+    });
   }
 }
