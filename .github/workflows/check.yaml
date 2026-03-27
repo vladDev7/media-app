@@ -25,6 +25,8 @@ jobs:
           cache: 'npm'
       - name: deps
         run: npm ci
+      - name: orm
+        run: npm run prisma:generate
       - name: lint
         run:
           npm run lint
