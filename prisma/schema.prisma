@@ -22,6 +22,17 @@ enum FileStatus {
   failed
 }
 
+enum ProcessingJobStatus { 
+  queued 
+  processing 
+  succeeded 
+  failed 
+} 
+
+enum ProcessingJobType { 
+  generate_report 
+}
+
 model User {
   id Int @id @default(autoincrement())
   email String @unique @db.VarChar(255)
@@ -37,21 +48,39 @@ model User {
 }
 
 model File {
-  id          String     @id @db.Uuid
+  id          String     @id @default(uuid()) @db.Uuid
   user_id     Int
   filename    String     @db.VarChar(512)
   storage_key String     @db.VarChar(1024)
   mime_type   String     @db.VarChar(255)
   size_bytes  BigInt?
   status      FileStatus @default(queued)
-  uploaded_at DateTime   @default(now()) @db.Timestamp(3)
+  uploaded_at DateTime   @default(now()) @db.Timestamp(6)
   created_at  DateTime   @default(now()) @db.Timestamptz(6)
   updated_at  DateTime   @updatedAt @db.Timestamptz(6)
 
   user User @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-
+  jobs ProcessingJob[]
   @@index([user_id])
   @@index([status])
   @@index([created_at])
   @@map("files")
+} 
+
+model ProcessingJob { 
+  id Int @id @default(autoincrement()) 
+  file_id String @db.Uuid 
+  status ProcessingJobStatus 
+  attempts Int @default(0) 
+  error String? 
+  type ProcessingJobType 
+  created_at DateTime @default(now()) @db.Timestamptz(6) 
+  updated_at DateTime @updatedAt @db.Timestamptz(6) 
+  
+  file File @relation(fields: [file_id], references: [id], onDelete: Cascade) 
+  
+  @@index([file_id]) 
+  @@index([status]) 
+  @@index([created_at]) 
+  @@map("processing_jobs") 
 }
