@@ -8,8 +8,12 @@ import databaseConfigValidationSchema from './config/database.config.validationS
 import { DatabaseModule } from './database/database.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { InfrastructureModule } from './infrastructure/infrastructure.module';
 import appConfigValidationSchema from './config/app.config.validationSchema';
 import appConfig from './config/app.config';
+import infrastructureConfigValidationSchema from './config/infrastructure.config.validationSchema';
+import infrastructureConfig from './config/infrastructure.config';
+import { MediaModule } from './media/media.module';
 
 @Module({
   imports: [
@@ -31,9 +35,18 @@ import appConfig from './config/app.config';
       },
       load: [appConfig],
     }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [infrastructureConfig],
+      validate: (config) => {
+        return infrastructureConfigValidationSchema.parse(config);
+      },
+    }),
     DatabaseModule,
     UsersModule,
     AuthModule,
+    MediaModule,
+    InfrastructureModule,
   ],
   controllers: [AppController],
   providers: [AppService, DatabaseService],

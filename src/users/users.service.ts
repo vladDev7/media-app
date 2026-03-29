@@ -3,7 +3,7 @@ import { hash } from 'bcryptjs';
 // import { Prisma } from 'generated/prisma/client';
 // import { DatabaseService } from 'src/database/database.service';
 import { UserRepository } from './users.repository';
-import { UserCreateDto, UserDto } from 'contracts';
+import { UserCreateDto, UserDto, UserInnerDto } from 'contracts';
 
 @Injectable()
 export class UsersService {
@@ -25,5 +25,9 @@ export class UsersService {
       throw new Error();
     }
     return user;
+  }
+
+  async findById(id: number): Promise<UserInnerDto> {
+    return this.userRepository.findById(id);
   }
 }
