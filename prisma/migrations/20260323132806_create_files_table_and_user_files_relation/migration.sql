@@ -9,7 +9,7 @@ CREATE TABLE "files" (
     "storage_key" VARCHAR(1024) NOT NULL,
     "mime_type" VARCHAR(255) NOT NULL,
     "size_bytes" BIGINT,
-    "status" "FileStatus" NOT NULL DEFAULT 'queued',
+    "status" "FileStatus" NOT NULL DEFAULT 'uploaded',
     "uploaded_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "created_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMPTZ(6) NOT NULL,
