@@ -22,4 +22,16 @@ export class UserRepository {
     }
     return user;
   }
+
+  async findById(id: number): Promise<Omit<User, 'password'>> {
+    const user = await this.databaseService.user.findUnique({
+      where: { id },
+      omit: { password: true },
+    });
+
+    if (!user) {
+      throw new Error();
+    }
+    return user;
+  }
 }
