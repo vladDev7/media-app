@@ -1,5 +1,5 @@
 import { FileValidator } from '@nestjs/common';
-import { AllowedMimetypes } from 'src/helpers/memtypes';
+import { AllowedMimetypes } from 'src/helpers/constants/memtypes';
 
 export class FileMimetypeValidator extends FileValidator<Record<string, never>, Express.Multer.File> {
   isValid(file?: Express.Multer.File): boolean | Promise<boolean> {

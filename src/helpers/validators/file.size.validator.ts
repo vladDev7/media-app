@@ -1,5 +1,5 @@
 import { FileValidator } from '@nestjs/common';
-import { MAX_FILE_SIZE_BYTES } from '../constants';
+import { MAX_FILE_SIZE_BYTES } from '../constants/constants';
 
 export class FileSizeValidator extends FileValidator<Record<string, never>, Express.Multer.File> {
   isValid(file?: Express.Multer.File): boolean | Promise<boolean> {
