@@ -4,8 +4,8 @@ export const UserSchema = zod.object({
   id: zod.int(),
   email: zod.email().max(255),
   password: zod.string(),
-  name: zod.string().max(255),
-  surname: zod.string().max(255),
+  name: zod.string().max(255).nullable(),
+  surname: zod.string().max(255).nullable(),
   created_at: zod.date(),
   updated_at: zod.date(),
 });
